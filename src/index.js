@@ -23,7 +23,16 @@ function checksExistsUserAccount(request, response, next) {
 }
 
 function checksCreateTodosUserAvailability(request, response, next) {
-  // Complete aqui
+  const { user } = request;
+
+  const totalTodos = user.todos.length;
+  const limitTodosFreePlan = 10;
+
+  if (!user.pro && totalTodos >= limitTodosFreePlan) {
+    return response.status(400);
+  }
+
+  next();
 }
 
 function checksTodoExists(request, response, next) {
